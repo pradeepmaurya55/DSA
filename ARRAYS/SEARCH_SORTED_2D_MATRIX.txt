@@ -1,0 +1,53 @@
+//BINAY SEARCH TREE METHOD
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+       int i,j;
+        i=0;
+        j=matrix[0].size()-1;
+        while(i<matrix.size() && j>=0)
+        {
+            if(matrix[i][j]==target)
+            {
+                return true;
+            }
+             if(matrix[i][j]<target)
+            {
+                i++;
+            }
+            else 
+            {
+                j--;
+            }
+        }
+        return false;
+    }
+};
+
+
+/*BINARY SEARCH METHOD
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int low,high,mid,row,col;
+        row=matrix.size();
+        col=matrix[0].size();
+        low=0;
+        high=(row*col)-1;
+        
+        while(low<=high)
+        {
+            mid=(low+high)/2;
+            if(matrix[mid/col][mid%col]==target)
+                return true;
+            else if(matrix[mid/col][mid%col]>target)
+                high=mid-1;
+            else
+                low=mid+1;
+            
+        }
+        
+        return false;
+    }
+};
+*/
