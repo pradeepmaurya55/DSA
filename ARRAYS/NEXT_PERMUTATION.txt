@@ -1,0 +1,33 @@
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        int s=nums.size(),bp,sp;//array size,break point and swap point
+        bp=s-2;
+        while(bp>=0)
+        {
+            if(nums[bp] < nums[bp+1])
+                break;
+            
+            bp--;
+        }
+        
+        if(bp==-1)
+        {
+            reverse(nums.begin(),nums.end());
+        }
+        else
+        {
+            sp=s-1;
+            while(sp>bp)
+            {
+                if(nums[sp]>nums[bp])
+                    break;
+                
+                sp--;
+            }
+            swap(nums[bp],nums[sp]);
+            reverse(nums.begin()+bp+1,nums.end());
+        }
+        
+    }
+};
