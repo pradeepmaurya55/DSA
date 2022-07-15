@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct activity
+{
+    int s,f,pos;
+};
+
+bool comparator(activity a1, activity a2)
+{
+    if(a1.f<a2.f) return true;
+    else if(a1.f>a2.f) return false;
+    else if(a1.pos<a2.pos) return true;
+    else false;
+}
+
+int maximumActivities(vector<int> &start, vector<int> &finish) {
+    int maxp=1,cf;
+    int n=start.size();
+    activity maxa[n];
+    for(int i=0;i<n;i++)
+    {
+        maxa[i].s=start[i];
+        maxa[i].f=finish[i];
+        maxa[i].pos=i+1;
+    }
+    
+    sort(maxa,maxa+n,comparator);
+    cf=maxa[0].f;
+    
+    for(int i=1;i<n;i++)
+    {
+        if(maxa[i].s>=cf)
+        {
+            cf=maxa[i].f;
+            maxp++;
+        }
+    }
+    return maxp;
+}
