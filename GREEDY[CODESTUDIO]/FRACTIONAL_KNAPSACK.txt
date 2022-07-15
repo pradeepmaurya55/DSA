@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct item
+{
+    int weight;
+    int value;
+    double vw;
+};
+
+bool comparator(item i1, item i2)
+{
+    if(i1.vw>=i2.vw) return true;
+    else
+        return false;
+}
+
+double maximumValue (vector<pair<int, int>>& items, int n, int w)
+{
+    
+    double profit=0;
+    item maxi[n];
+    for(int i=0;i<n;i++)
+    {
+        maxi[i].weight=items[i].first;
+        maxi[i].value=items[i].second;
+        maxi[i].vw=((double)maxi[i].value/(double)maxi[i].weight);
+    }
+    
+    sort(maxi,maxi+n,comparator);
+    int currentw=0;
+    for(int i=0;i<n;i++)
+    {
+        if(currentw+maxi[i].weight<=w)
+        {
+            currentw += maxi[i].weight;
+            profit+=maxi[i].value;
+        }
+        else
+        {
+            profit+=((double)maxi[i].value/(double)maxi[i].weight)*(double)(w-currentw);
+            break;
+        }
+    }
+    
+    return profit;
+}
