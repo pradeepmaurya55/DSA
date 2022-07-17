@@ -1,0 +1,68 @@
+bool check(int row,int col,vector<vector<int>> &board,int n)
+{
+    int rc=row;
+    int cc=col;
+    
+    while(row>=0 && col>=0)
+    {
+        if(board[row][col]==1) return false;
+        row--;
+        col--;
+    }
+    
+    col=cc;
+    row=rc;
+    
+    while(col>=0)
+    {
+        if(board[row][col]==1) return false;
+        col--;
+    }
+    
+    col=cc;
+    row=rc;
+    
+    while(row<n && col>=0)
+    {
+        if(board[row][col]==1) return false;
+        row++;
+        col--;
+    }
+    
+    return true;
+}
+
+
+void solve(vector<vector<int>> &board,vector<vector<int>> &sol,int col,int n)
+{
+    if(col==n)
+    {
+        vector<int> ts;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                ts.push_back(board[i][j]);
+            }
+        }
+        sol.push_back(ts);
+        return;
+    }
+    for(int row =0;row<n;row++)
+    {
+        if(check(row,col,board,n))
+        {
+            board[row][col]=1;
+            solve(board,sol,col+1,n);
+            board[row][col]=0;
+        }
+    }
+}
+
+
+vector<vector<int>> solveNQueens(int n) {
+    vector<vector<int>> board(n,vector<int>(n,0));
+    vector<vector<int>> sol;
+    solve(board,sol,0,n);
+    return sol;
+}

@@ -1,0 +1,23 @@
+void solve(vector<string> &sol,string &s,int index)
+{
+    if(index==s.size())
+    {
+        sol.push_back(s);
+        return;
+    }
+    
+    for(int i=index;i<s.size();i++)
+    {
+        swap(s[index],s[i]);
+        solve(sol,s,index+1);
+        swap(s[index],s[i]);
+    }
+
+    
+}
+
+vector<string> findPermutations(string &s) {
+    vector<string> sol;
+    solve(sol,s,0);
+    return sol;
+}

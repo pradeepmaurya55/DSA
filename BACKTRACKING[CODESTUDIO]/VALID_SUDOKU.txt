@@ -1,0 +1,43 @@
+bool check(int matrix[9][9],int num,int col,int row)
+{
+    for(int k=0;k<9;k++)
+    {
+        if(matrix[k][col]==num ||matrix[row][k]==num) return false;
+    }
+    
+    int ti=row-row%3;
+    int tj=col-col%3;
+    for(int i=ti;i<ti+3;i++)
+    {
+        for(int j=tj;j<tj+3;j++)
+        {
+            if(matrix[i][j]==num) return false;
+            
+        }
+    }   
+    return true;
+}
+
+bool solve(int matrix[9][9],int row,int col)
+{
+    if(row>=9) return true;
+    if(col>=9) return solve(matrix,row+1,0);
+    if(matrix[row][col]!=0) return solve(matrix,row,col+1);
+   
+    for(int num=1;num<10;num++)
+     {
+         if(check(matrix,num,col,row))
+         {
+             matrix[row][col]=num;
+             if(solve(matrix,row,col+1)) return true;
+             matrix[row][col]=0;
+         }
+    }
+    
+    return false;    
+}
+
+
+bool isItSudoku(int matrix[9][9]) {
+    return(solve(matrix,0,0));
+}
