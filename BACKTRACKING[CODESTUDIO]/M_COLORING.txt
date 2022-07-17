@@ -1,0 +1,35 @@
+bool check(vector<vector<int>> &mat,vector<int> &color,int clr,int node)
+{
+    for(int k=0;k<mat.size();k++)
+    {
+        if(k!=node && mat[node][k]==1 && color[k]==clr) return false;
+    }
+    
+    return true;
+}
+
+bool solve(vector<vector<int>> &mat,vector<int> &color,int m,int node)
+{
+    if(node==mat.size()) return true;
+    
+    for(int i=1;i<=m;i++)
+    {
+        if(check(mat,color,i,node))
+        {
+            color[node]=i;
+            if(solve(mat,color,m,node+1)) return true;
+            color[node]=0;
+        }
+    }
+    
+    return false;
+    
+}
+
+string graphColoring(vector<vector<int>> &mat, int m) {
+    vector<int> color(mat.size(),0);
+    if(solve(mat,color,m,0) )return("YES");
+    else
+        return("NO");
+    
+}
