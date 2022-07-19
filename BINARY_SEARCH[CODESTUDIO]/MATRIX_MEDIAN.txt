@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int getMedian(vector<vector<int>> &matrix)
+{
+    int n=matrix.size();
+    int m=matrix[0].size();
+    int high=10e5;
+    int low=1;
+    
+    while(low<=high)
+    {
+        int mid=(low+high)/2;
+        int count=0;
+        for(int i=0;i<n;i++)
+        {
+           auto it=upper_bound(matrix[i].begin(),matrix[i].end(),mid);
+           count+=it-matrix[i].begin();
+        }
+            
+        if(count<=(n*m)/2)
+        {
+            low=mid+1;
+        }
+        else
+        {
+            high=mid-1;
+        }
+            
+    }
+    return low;
+}
