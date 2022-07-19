@@ -1,0 +1,51 @@
+bool check(vector<int> time, long long int mid,int n,int m)
+{
+    int count=1;
+    long long int sum=0;
+    for(int i=0;i<m;i++)
+    {
+        if(sum+time[i]<=mid) 
+        {
+            sum=sum+(long long)time[i];
+        }
+        else
+        {
+           count++;
+            if(count>n || time[i]> mid) 
+            {
+                return false;
+            }
+            sum=time[i];
+        }
+        
+    }
+    return true;
+}
+
+long long ayushGivesNinjatest(int n, int m, vector<int> time) 
+{	
+    if(n>m) return -1;
+	long long int low = time[0];
+    long long int high = 0;
+    long long int ans;
+    
+    for(int i =0;i<m;i++)
+       high=high+(long long)time[i];
+    
+    while(low<=high)
+    {
+        long long int mid=low + (high-low)/2;
+        if(check(time,mid,n,m))
+        {
+            high=mid-1;
+            ans=mid;
+        }
+        else
+        {
+            low=mid+1;
+        }
+        
+    }
+    
+    return ans;
+}
