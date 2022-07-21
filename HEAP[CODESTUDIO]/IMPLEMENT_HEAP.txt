@@ -1,0 +1,63 @@
+void heapify_down(vector<int>& heap,int i)
+{
+    int left = 2*i+1;
+    int right = 2*i+2;
+    int min = i;
+
+    if (left < heap.size() && heap[left] < heap[i]) {
+        min = left;
+    }
+
+    if (right < heap.size() && heap[right] < heap[min]) {
+        min = right;
+    }
+
+    if (min != i)
+    {
+        swap(heap[i], heap[min]);
+        heapify_down(heap,min);
+    }
+}
+
+// Recursive heapify-up algorithm
+void heapify_up(vector<int> &heap,int i)
+{
+    if (i && heap[(i-1)/2] > heap[i])
+    {
+        swap(heap[i], heap[(i-1)/2]);
+        heapify_up(heap,(i-1)/2);
+    }
+}
+
+void push(vector<int> &heap,int key)
+{
+    heap.push_back(key);
+
+    int index = heap.size() - 1;
+    heapify_up(heap,index);
+}
+ 
+void pop(vector<int> &heap)
+{
+    heap[0] = heap.back();
+    heap.pop_back();
+
+    heapify_down(heap,0);
+}
+
+vector<int> minHeap(int n, vector<vector<int>>& q) {
+    vector<int> heap,ans;
+    for(int i=0;i<q.size();i++)
+    {
+        if(q[i][0])
+        {
+            ans.push_back(heap[0]);
+            pop(heap);
+        }
+        else
+        {
+            push(heap,q[i][1]);
+        }
+    }
+    return ans;
+}
