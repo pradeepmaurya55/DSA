@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Stack {
+	queue<int> s;
+
+   public:
+    Stack() {
+        // Implement the Constructor.
+    }
+
+    /*----------------- Public Functions of Stack -----------------*/
+
+    int getSize() {
+        return s.size();
+    }
+
+    bool isEmpty() {
+        return s.empty();
+    }
+
+    void push(int element) {
+        s.push(element);
+        for(int i=0;i<s.size()-1;i++)
+        {
+            s.push(s.front());
+            s.pop();
+        }
+    }
+
+    int pop() {
+        if(s.empty()) return -1;
+        int temp=s.front();
+        s.pop();
+        return temp;
+    }
+
+    int top() {
+        if(s.empty()) return -1;
+        return s.front();
+    }
+};
