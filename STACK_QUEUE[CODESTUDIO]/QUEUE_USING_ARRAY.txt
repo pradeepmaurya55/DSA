@@ -1,0 +1,54 @@
+class Queue {
+    int head;
+    int back;
+    int size;
+    int *arr;
+public:
+    Queue() {
+        size=10000;
+        arr=new int[size];
+        head=0;
+        back=0;
+        
+    }
+
+    /*----------------- Public Functions of Queue -----------------*/
+
+    bool isEmpty() {
+        if(head==back) return true;
+        else return false;
+    }
+
+    void enqueue(int data) {
+        arr[back++]=data;
+        if(head==-1) head=back;
+    }
+
+    int dequeue() {
+        if(head==back)
+        {
+            return -1;
+        }
+        else
+        {
+            int ans = arr[head];
+            arr[head]=-1;
+            head++;
+            if(head==back)
+            {
+                head=back=0;
+            }
+            return ans;
+        }
+    }
+
+    int front() {
+        if(head==back)
+        {
+            return -1;
+        }
+        else
+            return arr[head];
+        
+    }
+};
