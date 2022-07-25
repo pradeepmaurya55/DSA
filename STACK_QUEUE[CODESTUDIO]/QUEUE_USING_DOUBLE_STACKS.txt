@@ -1,0 +1,52 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Queue {
+    stack<int> input,output;
+    
+    public:
+    Queue() {
+        // Initialize your data structure here.
+    }
+
+    void enQueue(int val) {
+       input.push(val);
+    }
+
+    int deQueue() {
+        if(output.empty())
+        {
+            while(input.size())
+            {
+                output.push(input.top());
+                input.pop();
+            }
+        }
+        
+        if(output.empty()) return -1;
+        else
+        {
+            int t=output.top();
+            output.pop();
+            return t; 
+        }
+        
+    }
+
+    int peek() {
+        if(output.empty())
+        {
+            while(input.size())
+            {
+                output.push(input.top());
+                input.pop();
+            }
+        }
+        if(output.empty()) return -1;
+        else return output.top();
+    }
+
+    bool isEmpty() {
+        return (input.empty() && output.empty());
+    }
+};
