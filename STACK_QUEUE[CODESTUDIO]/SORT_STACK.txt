@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void sortStack(stack<int> &input){
+	stack<int> tmpStack;
+ 
+    while (!input.empty())
+    {
+        int tmp = input.top();
+        input.pop();
+ 
+        while (!tmpStack.empty() && tmpStack.top() < tmp)
+        {
+            input.push(tmpStack.top());
+            tmpStack.pop();
+        }
+ 
+        tmpStack.push(tmp);
+    }
+ 
+    input = tmpStack;
+
+}
