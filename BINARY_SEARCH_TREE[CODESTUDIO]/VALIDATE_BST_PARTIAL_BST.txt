@@ -1,0 +1,33 @@
+/*************************************************************
+ 
+    Following is the Binary Tree node structure
+
+    class BinaryTreeNode 
+    {
+    public : 
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+
+        BinaryTreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+*************************************************************/
+#include<bits/stdc++.h>
+
+bool sol(BinaryTreeNode<int> *node,int min ,int max)
+{
+    if(node==NULL) return true;
+    if(node->data<min || node->data>max) return false;
+    return sol(node->left,min,node->data) && sol(node->right,node->data,max);
+}
+
+bool validateBST(BinaryTreeNode<int> *root) {
+    if(root==NULL) return true;
+    return sol(root->left,INT_MIN,root->data) && sol(root->right,root->data,INT_MAX);
+    
+}
