@@ -1,0 +1,100 @@
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+
+#include<bits/stdc++.h>
+
+string serializeTree(TreeNode<int> *root)
+{
+    if(!root) return "";
+    queue<TreeNode<int>*> q;
+    string ans;
+    q.push(root);
+    while(!q.empty())
+    {
+        TreeNode<int> * curr=q.front();
+        q.pop();
+        if(curr==NULL) 
+        {
+            ans+="#,";
+        }
+        else
+        {
+            ans+=to_string(curr->data);
+            ans+=",";
+        }
+        if(curr!=NULL)
+        {
+            q.push(curr->left);
+            q.push(curr->right);
+        }
+        
+    }
+    
+    return ans;
+
+}
+
+TreeNode<int>* deserializeTree(string &serialized)
+{
+    if(serialized.size()==0) return NULL;
+    
+    stringstream s(serialized);
+    string str;
+    getline(s,str,',');
+    TreeNode<int> *root = new TreeNode<int>(stoi(str));
+    queue<TreeNode<int> *> q;
+    q.push(root);
+    while(!q.empty())
+    {
+        TreeNode<int> * curr=q.front();
+        q.pop();
+        
+        
+        getline(s,str,',');
+        if(str=="#")
+        {
+            curr->left=NULL;
+        }
+        else
+        {
+            TreeNode<int> *leftN=new TreeNode<int> (stoi(str));
+            curr->left=leftN;
+            q.push(leftN);
+        }
+        
+        
+        getline(s,str,',');
+        if(str=="#")
+        {
+            curr->right=NULL;
+        }
+        else
+        {
+            TreeNode<int> *rightN=new TreeNode<int> (stoi(str));
+            curr->right=rightN;
+            q.push(rightN);
+        }
+    }
+
+    return root;
+}
+
+
+
