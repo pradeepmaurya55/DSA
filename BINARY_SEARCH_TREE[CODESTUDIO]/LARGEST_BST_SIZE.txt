@@ -1,0 +1,65 @@
+
+/************************************************************
+
+    Following is the Binary Tree node structure
+    
+    template <typename T>
+    class TreeNode {
+        public :
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+
+        ~TreeNode() {
+            if(left)
+                delete left;
+            if(right)
+                delete right;
+        }
+    };
+
+************************************************************/
+class helper
+{
+    public:
+    int min;
+    int max;
+    int size;
+    
+    helper(int mn,int mx,int sz)
+    {
+        min=mn;
+        max=mx;
+        size=sz;
+    }
+};
+
+helper solve(TreeNode<int>* root)
+{
+    if(!root) return helper(INT_MAX,INT_MIN,0);
+    
+    helper leftn=solve(root->left);
+    helper rightn=solve(root->right);
+    
+    if(leftn.max<root->data && rightn.min>root->data)
+    {
+        return helper(min(leftn.min,root->data),max(rightn.max,root->data),leftn.size+rightn.size+1);
+    }
+    else
+    {
+        return helper(INT_MIN,INT_MAX,max(leftn.size,rightn.size));
+    }
+    
+    
+}
+
+int largestBST(TreeNode<int>* root) 
+{
+    return solve(root).size;
+}
