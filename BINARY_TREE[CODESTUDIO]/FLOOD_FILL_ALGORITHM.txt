@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+vector<vector<int>> floodFill(vector<vector<int>> &image, int x, int y, int newColor)
+{
+    
+    if(image[x][y]==newColor) return image;
+    
+    int r=image.size();
+    int c=image[0].size();
+    
+    int old=image[x][y];
+    image[x][y]=newColor;
+    
+    queue<pair<int,int>> q;
+    q.push({x,y});
+    
+    int dx[]={0,0,1,-1};
+    int dy[]={1,-1,0,0};
+    
+    while(!q.empty())
+    {
+        int x1=q.front().first;
+        int y1=q.front().second;
+        int nx,ny;
+        q.pop();
+        
+        for(int i=0;i<4;i++)
+        {
+            nx=x1+dx[i];ny=y1+dy[i];
+            if(nx<r && nx>-1 && ny<c && ny>-1&& image[nx][ny]==old)
+            {
+                image[nx][ny]=newColor;
+                q.push({nx,ny});
+            }
+        }
+        
+    }
+    return image;
+}
