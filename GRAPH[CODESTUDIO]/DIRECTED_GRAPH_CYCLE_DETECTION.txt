@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+
+void convertor(unordered_map<int,list<int>>&adj,vector<pair<int,int>>&edges){
+    for(int i = 0 ;i<edges.size();i++){
+        int u = edges[i].first;
+        int v = edges[i].second;
+        adj[u].push_back(v);
+    }
+}
+
+bool cycleDFS(unordered_map<int,list<int>>&adj , int nodes,vector<bool>&visited,vector<bool>&DFSvisited ){
+    visited[nodes] = true;
+    DFSvisited[nodes] = true;
+    for(auto it :adj[nodes]){
+        if(visited[it] == false){
+            if(cycleDFS(adj,  it ,visited,DFSvisited)){
+                return true;
+            }
+            
+        }
+        else if(visited[it] == true and DFSvisited[it] == true){
+                return true;
+            }
+    }
+     DFSvisited[nodes] = false;
+    return false;
+}
+
+int detectCycleInDirectedGraph(int n, vector < pair < int, int >> & edges) {
+   unordered_map<int,list<int>> adj;
+    convertor(adj,edges);
+    vector<int>ans;
+    vector<bool>visited(n +1,false);
+    vector<bool>DFSvisited(n +1,false);
+    for(int i = 1 ; i <=n;i++){
+        if(visited[i] == false){
+            if(cycleDFS(adj,i,visited,DFSvisited)){
+                return true;
+            }
+        }
+    }
+    return false;
+}
