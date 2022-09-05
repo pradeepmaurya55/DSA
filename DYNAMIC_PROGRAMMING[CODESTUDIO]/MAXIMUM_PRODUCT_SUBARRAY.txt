@@ -1,0 +1,17 @@
+#include<bits/stdc++.h>
+int maximumProduct(vector<int> &arr, int n)
+{
+    int minn=arr[0];
+    int maxx=arr[0];
+    int ans=arr[0];
+    
+    for(int i=1;i<n;i++)
+    {
+        int temp=min({arr[i],maxx*arr[i],minn*arr[i]});
+        maxx=max({arr[i],maxx*arr[i],minn*arr[i]});
+        minn=temp;
+        
+        ans=max(ans,maxx);        
+    }
+    return ans;
+}
