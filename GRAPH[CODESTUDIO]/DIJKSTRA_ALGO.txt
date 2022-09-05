@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+
+void convertor(unordered_map<int,list<pair<int,int>>> &adj, vector<vector<int>> vec, int edges)
+{
+    for(int i=0;i<edges;i++)
+    {
+        int x=vec[i][0];
+        int y=vec[i][1];
+        int z=vec[i][2];
+        adj[x].push_back({y,z});
+        adj[y].push_back({x,z});
+    } 
+}
+
+vector<int> dijkstra(vector<vector<int>> &vec, int vertices, int edges, int source) 
+{
+    unordered_map<int,list<pair<int,int>>> adj;
+    convertor(adj,vec,edges);
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq; //{distance,node} format
+    vector<int> todist(vertices,INT_MAX);
+    pq.push({0,source});
+    todist[source]=0;
+    while(!pq.empty())
+    {
+        int dist=pq.top().first;
+        int node=pq.top().second;
+        pq.pop();
+        for(auto it:adj[node])
+        {
+            int child=it.first;
+            int wt=it.second;
+            if(todist[child]>dist+wt)
+            {
+                todist[child]=dist+wt;
+                pq.push({todist[child],child});
+            }
+        }
+    }
+    
+    return todist;
+}
