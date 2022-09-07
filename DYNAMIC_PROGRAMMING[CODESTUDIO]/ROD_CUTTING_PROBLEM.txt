@@ -1,0 +1,21 @@
+#include<bits/stdc++.h>
+int cr(vector<int> price,int cutSize,int size,vector<vector<int>> &dp)
+{
+    if(cutSize==0) return size*price[0];
+    if(dp[cutSize][size]!=-1) return dp[cutSize][size];
+    
+    //use current cut size or dont use
+    int notUse=cr(price,cutSize-1,size,dp);
+    int use=INT_MIN;
+    //check if current cut size is viable
+    if(cutSize+1<=size)
+        use=price[cutSize]+cr(price,cutSize,size-cutSize-1,dp);
+    //-1 extra as 1 based indexing
+    return dp[cutSize][size]=max(use,notUse);
+}
+
+int cutRod(vector<int> &price, int n)
+{
+	vector<vector<int>> dp(n+1,vector<int>(n+1,-1));
+    return cr(price,n-1,n,dp);
+}
