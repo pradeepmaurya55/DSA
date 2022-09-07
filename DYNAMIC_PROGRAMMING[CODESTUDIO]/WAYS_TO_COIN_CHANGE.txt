@@ -1,0 +1,19 @@
+#include<bits/stdc++.h>
+
+long cw(int *den, int ind, int value,vector<vector<long>> &dp)
+{
+    if(ind == 0) return  (value%den[ind]==0);
+    if(dp[ind][value]!=-1) return dp[ind][value];
+    
+    long notTake=cw(den,ind-1,value,dp);
+    long take=0;
+    if(den[ind]<=value)
+        take=cw(den,ind,value-den[ind],dp);
+    return dp[ind][value]=take+notTake;
+}
+
+long countWaysToMakeChange(int *denominations, int n, int value)
+{
+    vector<vector<long>> dp(n,vector<long>(value+1,-1));
+    return cw(denominations,n-1,value,dp);
+}
