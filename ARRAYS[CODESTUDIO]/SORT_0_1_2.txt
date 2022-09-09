@@ -1,0 +1,11 @@
+#include <bits/stdc++.h> 
+void sort012(int *arr, int n)
+{
+  int j = 0, k = n-1;//j for min element 0 and k for max element 2
+   for (int i=0; i <= k; i++) {
+       if (arr[i] == 0)
+           swap(arr[i], arr[j++]);
+       else if (arr[i] == 2)
+           swap(arr[i--], arr[k--]);
+   }
+}
