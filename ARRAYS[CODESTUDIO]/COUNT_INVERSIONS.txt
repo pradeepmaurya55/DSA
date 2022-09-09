@@ -1,0 +1,61 @@
+#include <bits/stdc++.h> 
+long long int cnt=0;
+void merge(long long *arr, long long s, long long e)
+{
+//     divide the array
+    int mid=s+(e-s)/2;
+    int leftLen=mid-s+1;
+    int rightLen=e-mid;
+    int *left=new int[leftLen];
+    int *right=new int[rightLen];
+    int mainArrIndex=s;
+    long long inversionCount=0;
+    for(int i=0;i<leftLen;i++){
+        left[i]=arr[mainArrIndex++];
+    }
+    mainArrIndex=mid+1;
+    for(int i=0;i<rightLen;i++){
+        right[i]=arr[mainArrIndex++];
+    }
+//     merge 2 sorted array
+    int index1=0;
+    int index2=0;
+    mainArrIndex=s;
+    while(index1<leftLen && index2<rightLen){
+        if(left[index1]<right[index2]){
+            arr[mainArrIndex++]=left[index1++];
+        }
+        else{
+            arr[mainArrIndex++]=right[index2++];
+            cnt+=leftLen-index1;
+        }
+    }
+    while(index1<leftLen){
+        arr[mainArrIndex++]=left[index1++];
+    }
+    while(index2<rightLen){
+        arr[mainArrIndex++]=right[index2++];
+    }
+    delete []left;
+    delete []right;
+}
+
+void mergeSort(long long *arr,int s,int e){
+//    base case
+    if(s>=e){
+        return;
+    }
+        int mid=s+(e-s)/2;
+//         sorting left part
+        mergeSort(arr,s,mid);
+//         sorting right Part
+        mergeSort(arr,mid+1,e);
+//         merge the array
+        merge(arr,s,e);
+}
+
+long long getInversions(long long *arr, int n){
+    // Write your code here.
+    mergeSort(arr,0,n-1);
+    return cnt;
+}
