@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+
+pair<int,int> missingAndRepeating(vector<int> &arr, int n)
+{
+ 
+  
+   int mn=0;
+   int rn=0;
+   unordered_map<int,int>mp;
+   for(int i=0;i<n;i++){
+       mp[arr[i]]++;
+   }
+   //missing no
+   for(int i=1;i<=n;i++){
+       if(mp.find(i)==mp.end()){
+           mn=i;
+       }
+   }
+   //repeating no
+   for(auto it:mp){
+       int freq=it.second;
+       int ele=it.first;
+       if(freq>1){
+           rn=ele;
+       }
+   }
+
+   return {mn,rn};
+
+}
