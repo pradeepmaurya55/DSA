@@ -1,0 +1,23 @@
+#include <bits/stdc++.h> 
+
+void rotateMatrix(vector<vector<int>> &mat, int n, int m)
+{
+    int row = 0, col = 0;
+    int rowLimit = (n-1), colLimit = (m-1);
+    
+    while(row<(n/2) && col<(m/2))
+    {
+        for(int i=row+1;i<=rowLimit;i++)
+            swap(mat[i][col],mat[i-1][col]);
+        for(int i=col+1;i<=colLimit;i++)
+            swap(mat[rowLimit][i],mat[rowLimit][i-1]);
+        for(int i=rowLimit;i>row;i--)
+            swap(mat[i][colLimit],mat[i-1][colLimit]);
+        for(int i=colLimit;i>(col+1);i--)
+            swap(mat[row][i],mat[row][i-1]);
+        
+        row++,col++;
+        rowLimit--,colLimit--;
+     }
+
+}
