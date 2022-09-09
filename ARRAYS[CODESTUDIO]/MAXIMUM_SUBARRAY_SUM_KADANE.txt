@@ -1,0 +1,23 @@
+#include <bits/stdc++.h> 
+long long maxSubarraySum(int arr[], int n)
+{
+    //KADANE's ALGORITHM
+    long currentsum=0;
+       long maxsum=0;
+       
+       for(int i=0;i<n;i++)
+       {
+           currentsum=currentsum+arr[i];
+           
+           if(currentsum>maxsum)
+           {
+               maxsum=currentsum;
+           }
+           
+           if(currentsum<0)
+           {
+               currentsum=0;
+           }
+       }
+       return maxsum;
+}
