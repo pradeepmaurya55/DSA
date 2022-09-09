@@ -1,0 +1,29 @@
+#include <bits/stdc++.h> 
+int findMajorityElement(int arr[], int n) {
+	int count,curele;
+        count=0;
+        for(int i =0;i<n;i++)
+        {
+            if(count==0)
+            {
+                curele=arr[i];
+            }
+            if(arr[i]==curele)
+            {
+                count++;
+            }
+            else
+                count--;
+        }
+        count=0;
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i]==curele)
+        {
+            count++;
+        }
+    }
+    
+    if(count>n/2) return curele;
+    return -1;
+}
