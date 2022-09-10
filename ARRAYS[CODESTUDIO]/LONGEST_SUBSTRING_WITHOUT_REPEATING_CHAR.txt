@@ -1,0 +1,16 @@
+#include <bits/stdc++.h> 
+int uniqueSubstrings(string input)
+{
+    int ans = 0;
+    
+    vector<int> pos (26, -1);
+    
+    int last = -1;
+    for(int i = 0; i < input.size(); i++) {
+        if(pos[input[i] - 'a'] != -1) last = max(last, pos[input[i] - 'a']);
+        
+        ans = max(ans, i - last);
+        pos[input[i] - 'a'] = i;
+    }
+    return ans;
+}
