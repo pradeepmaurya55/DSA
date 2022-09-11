@@ -1,0 +1,27 @@
+#include <bits/stdc++.h> 
+long getTrappedWater(long *a, int n){
+    long l=0,r=n-1;
+    long rmax=0,lmax=0;
+    long ans=0;
+    
+    while(l<=r)
+    {
+        if(a[l]<=a[r])//(1)
+        {
+            //(1) & (2) condition verifies that lmax<rmax
+            if(a[l]>=lmax) lmax=a[l];//(2)
+            else
+                ans=ans+lmax-a[l];//so no need to calculate min(lmax,rmax)
+            l++;
+        }
+        else
+        {
+            if(a[r]>=rmax)rmax=a[r];
+            else
+                ans=ans+rmax-a[r];//similarly no need hereto calculate min
+            r--;
+        }
+    }
+    
+    return ans;
+}
