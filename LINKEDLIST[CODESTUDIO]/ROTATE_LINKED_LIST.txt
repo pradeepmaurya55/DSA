@@ -1,0 +1,49 @@
+#include <bits/stdc++.h> 
+/********************************
+
+    Following is the class structure of the Node class:
+    
+    class Node
+    {
+    	public:
+    	    int data;
+    	    Node *next;
+    	    Node(int data)
+    	    {
+    	        this->data = data;
+    	        this->next = NULL;
+    	    }
+    };
+
+********************************/
+
+
+Node *rotate(Node *head, int k) 
+{
+    if(head==NULL || head->next==NULL || k==0) return head;
+    
+    Node *curr=head;
+    //calculate length and go to last node
+    int len=1;
+    while(curr->next!=NULL)
+    {
+        curr=curr->next;
+        len++;
+    }
+    
+    //link last node to first node
+    curr->next=head;
+    
+    //calculate effective rotations
+    k=k%len;
+    
+    //go to node which would be last node after rotations
+    int end = len-k;//calculate index of last node after rotations
+    while(end--) curr=curr->next;//reach last node after rotation 
+    
+    head=curr->next;//new head
+    curr->next=NULL;//last node
+
+    return head;
+    
+}
