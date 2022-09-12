@@ -1,0 +1,23 @@
+int longestSubSeg(vector<int> &arr , int n, int k)
+{
+    //two pointer approach
+    int i=0;//start
+    int j=0;//end
+    int maxx=0;
+    while(j<n)
+    {
+      if(arr[j]==0) k--; // if  found zero decrease k
+      if(k<0) //if count fo zeroes exceeds k
+        {
+            while(arr[i]!=0) i++;//find last zero
+            i++;
+            k++;
+        }
+        else
+        {
+            maxx=max(maxx,j-i+1);//calulate for every viable condition
+        }
+        j++;
+    }
+    return maxx;
+}
