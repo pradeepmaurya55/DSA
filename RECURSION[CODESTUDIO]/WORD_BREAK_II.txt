@@ -1,0 +1,41 @@
+void solve(string &s, vector<string> &dictionary,vector<string> &sol,int index, string &ts)
+{
+    if(index>=s.size())
+    {
+        sol.push_back(ts);
+        return;
+    }
+    
+    for(int i=index;i<s.size();i++)
+    {
+        string sub = s.substr(index,i-index+1);
+        bool present=false;
+        
+        for(int j=0;j<dictionary.size();j++)
+        {
+            if(dictionary[j].compare(sub)==0)
+            {
+                present=true;
+                break;
+            }
+        }
+        
+        if(present)
+        {
+            string prev= ts;
+            ts+=sub+" ";
+            solve(s,dictionary,sol,i+1,ts);
+            ts=prev;
+           
+        }
+    }
+}
+
+vector<string> wordBreak(string &s, vector<string> &dictionary)
+{
+    vector<string> sol;
+    string ts;
+    
+    solve(s,dictionary,sol,0,ts);
+    return sol;
+}
