@@ -1,0 +1,17 @@
+#include <bits/stdc++.h> 
+bool findWord(string &s, string &w)
+{
+	string temp="";
+    if(s.length()<w.length()) return false;
+    for(int i=0;i<s.length()-w.length()+1;i++)
+    {
+        temp="";
+        while(s[i]!=' ' && s[i]!='\0')
+        {
+            temp+=s[i];
+            i++;
+        }
+        if(temp==w) return true;
+    }
+    return false;
+}

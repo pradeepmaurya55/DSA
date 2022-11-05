@@ -1,0 +1,28 @@
+bool findOverlap(string &s)
+{
+    bool ab=false;
+    bool ba=false;
+    
+    for(int i=0;i<s.length()-1;i++)
+    {
+        if(s[i]=='A' && ab==false)
+        {
+            if(s[i+1]=='B')
+            {
+                ab=true;
+                i++;
+            }
+        }
+        else if(s[i]=='B' && ba==false)
+        {
+            if(s[i+1]=='A')
+            {
+                ba=true;
+                i++;
+            }
+        }
+        if(ab && ba) return true;
+    }
+    if(ab && ba)return true;
+    return false;
+}

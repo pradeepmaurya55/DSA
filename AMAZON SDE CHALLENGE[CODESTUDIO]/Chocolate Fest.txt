@@ -1,0 +1,30 @@
+#include <bits/stdc++.h> 
+vector<int> chocolateFest(vector<int> choco, int x)
+{
+    int sum=0;
+    int i=0;
+    int j=0;
+    int curr,start,end;
+    int res=INT_MAX;
+    vector<int> ans;
+    while(j<choco.size())
+    {
+        sum+=choco[j];
+        while(sum>x)
+        {
+            curr=j-i+1;
+            if(res>curr)
+            {
+                start=i;
+                end=j;
+                res=curr;
+            }
+            sum-=choco[i++];
+        }
+        j++;
+    }
+    for(int k=start;k<=end;k++)
+        ans.push_back(choco[k]);
+    return ans;
+    
+}

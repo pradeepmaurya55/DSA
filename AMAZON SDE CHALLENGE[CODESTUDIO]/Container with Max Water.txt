@@ -1,0 +1,17 @@
+#include <bits/stdc++.h> 
+int maxAreaContainer(vector<int> &arr) {
+    int l=0;
+    int r=arr.size()-1;
+    int curr=0;
+    int res=0;
+    
+    while(l<=r)
+    {
+        curr=min(arr[l],arr[r])*(r-l);
+        res=max(res,curr);
+        if(arr[l]<=arr[r]) l++;
+        else r--;
+    }
+    
+    return res;
+}
