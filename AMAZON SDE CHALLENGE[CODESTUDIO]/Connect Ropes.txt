@@ -1,0 +1,24 @@
+#include <bits/stdc++.h> 
+int connectRopes(vector<int> &lengths, int n) 
+{
+	// greedy approach
+    priority_queue<int,vector<int>,greater<int>> pq;
+    int ans=0;
+    
+    for(int i=0;i<n;i++)
+        pq.push(lengths[i]);
+    
+    while(n>1)
+    {
+        int t1=pq.top();
+        pq.pop();
+        int t2=pq.top();
+        pq.pop();
+        
+        int curr=t1+t2;
+        pq.push(curr);
+        ans+=curr;
+        n--;
+    }
+    return ans;
+}

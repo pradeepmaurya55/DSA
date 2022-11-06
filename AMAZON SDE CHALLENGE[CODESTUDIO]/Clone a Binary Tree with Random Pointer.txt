@@ -1,0 +1,66 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+        TreeNode<T> *random;
+
+        TreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+            random= NULL;
+        }
+    };
+
+************************************************************/
+TreeNode<int>* editleft(TreeNode<int> *root)
+{
+    if(root==NULL) return NULL;
+    TreeNode<int> *node=new TreeNode<int>(root->data);
+    node->left=root->left;
+    root->left=node;
+    if(root->left->left!=NULL) 
+        root->left->left->left=editleft(root->left->left);
+    if(root->right!=NULL) 
+        root->left->right=editleft(root->right);
+    return node;
+}
+
+void editrandom(TreeNode<int> *root)
+{
+    if(root==NULL) return;
+    if(root->random==NULL) root->left->random=NULL;
+    else root->left->random=root->random->left;
+    
+    if(root->left->left!=NULL) editrandom(root->left->left);
+    if(root->right!=NULL)editrandom(root->right);
+}
+
+void resolveTree(TreeNode<int> *root)
+{
+    if(root==NULL) return;
+    if(root->left->left!=NULL)
+    {
+        TreeNode<int> *copy=root->left;
+        root->left=root->left->left;
+        copy->left=root->left->left;   
+    }
+    else root->left=NULL;
+    
+    resolveTree(root->left);
+    resolveTree(root->right);
+}
+TreeNode<int> *cloneBinaryTreeRandomPointer(TreeNode<int> *root)
+{
+    TreeNode<int> *head=editleft(root);
+    editrandom(root);
+    resolveTree(root);
+    return head;
+}

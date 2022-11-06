@@ -1,0 +1,18 @@
+#include <bits/stdc++.h> 
+int minValue(vector<int>&arr, int n, int k)
+{
+	int diff;
+    int ans=INT_MAX;
+    sort(arr.begin(),arr.end());
+    
+    int i=0;
+    int j=k-1;
+    while(j<n)
+    {
+        diff=arr[j]-arr[i];
+        ans=min(diff,ans);
+        i++;
+        j++;
+    }
+    return ans;
+}

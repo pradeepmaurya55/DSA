@@ -1,0 +1,57 @@
+#include <bits/stdc++.h> 
+int maximumOnesRow(vector<vector<int>> &arr)
+{
+    int row=arr.size();
+    int col=arr[0].size();
+    int maxi=0;
+    int maxcount=0;
+    
+    for(int i=0;i<row;i++)
+    {
+        int curr=0;
+        int low=0;
+        int high=col-1;
+        int mid=(low+high)/2;
+        
+        while(low<high)
+        {
+            mid=(low+high)/2;
+            if(arr[i][mid]==0)
+            {
+                if(mid<col-1 && arr[i][mid+1]==1)
+                {
+                    curr=col-mid-1;
+                    break;
+                }
+                else if(mid<col-1 && arr[i][mid+1]==0)
+                {
+                    low=mid+1;
+                }
+                else if(mid==col-1)
+                {
+                    curr=0;
+                    break;
+                }
+            }
+            else if(arr[i][mid]==1)
+            {
+                if(mid==0)
+                {
+                    curr=col;
+                    break;
+                }
+                else
+                {
+                    high=mid;
+                }
+            }
+        }
+        if(curr>maxcount)
+        {
+            maxcount=curr;
+            maxi=i;
+        }
+       
+    }
+    return maxi;
+}

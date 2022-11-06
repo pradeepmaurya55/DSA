@@ -1,0 +1,61 @@
+//Greedy solution
+#include<bits/stdc++.h>
+int minimumJumps(vector<int> &arr, int n)
+{
+    int left=0;
+    int right=0;
+    int jumps=0;
+    int ind=0;
+    int far;
+    
+    while(right<n-1)
+    {
+        far=0;
+        for(int i=left;i<=right;i++)
+        {
+            far=max(far,i+arr[i]);
+        }
+        left=right+1;
+        right=far;
+        jumps++;
+        ind++;
+        if(ind>n) return -1;
+    }
+    
+    return jumps;
+    
+}
+
+
+
+
+
+
+
+//Dp solution only 10/11 cases passed
+int minimumJumps(vector<int> &arr, int n)
+{
+    // write your code here
+    vector<int> dp(n,0);
+    if(arr.size()==1) return 0;
+    if(arr[0]==0) return -1;
+    int ans;
+    for(int ind=n-2;ind>=0;ind--)
+    {
+        int jumps=INT_MAX;
+   
+        for(int i=1;i<=arr[ind];i++)
+        {
+            int curr;
+            if(ind+i>=n) curr=INT_MAX;
+            else curr = dp[ind+i];
+                               
+            if(curr!=INT_MAX) jumps=min(jumps,curr+1);
+        }
+
+        dp[ind]=jumps;
+    }
+    if(dp[0]==INT_MAX) return -1;
+    return dp[0];
+    
+}
