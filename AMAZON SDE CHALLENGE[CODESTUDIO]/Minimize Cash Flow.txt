@@ -1,0 +1,53 @@
+#include <bits/stdc++.h> 
+//Greedy approach
+
+int maxIndex(int amount[],int n)
+{
+    int ind=0;
+    for(int i=1;i<n;i++)
+    {
+        if(amount[i]>amount[ind]) ind=i;
+    }
+    return ind;
+}
+
+int minIndex(int amount[],int n)
+{
+    int ind=0;
+    for(int i=1;i<n;i++)
+    {
+        if(amount[i]<amount[ind]) ind=i;
+    }
+    return ind;
+}
+
+void solve(int amount[],vector<vector<int>> &ans, int n)
+{
+    int maxDebt=minIndex(amount,n);
+    int maxCredit=maxIndex(amount,n);
+    
+    if(amount[maxDebt]==0 && amount[maxCredit]==0) return;
+    
+    int minv=min(abs(amount[maxDebt]),amount[maxCredit]);
+    amount[maxCredit]-=minv;
+    amount[maxDebt]+=minv;
+    
+    ans[maxDebt][maxCredit]=minv;
+    solve(amount,ans,n);
+    
+}
+
+vector<vector<int>> minCashFlow(vector<vector<int>>& t, int n)
+{
+    int netAmount[n]={0};
+    vector<vector<int>> ans(n,vector<int>(n,0));
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            netAmount[i]+=t[j][i]-t[i][j];
+        }
+    }
+    solve(netAmount,ans,n);
+    return ans;
+}

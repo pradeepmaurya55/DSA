@@ -1,0 +1,39 @@
+#include <bits/stdc++.h> 
+class Queue{
+    // Stacks to be used in the operations.
+    stack<int> input, output;
+    
+    public:
+    // Enqueues 'X' into the queue. Returns true after enqueuing.
+    bool enqueue(int X)
+    {
+        while(!output.empty())
+        {
+            input.push(output.top());
+            output.pop();
+        }
+        input.push(X);
+        while(!input.empty())
+        {
+            output.push(input.top());
+            input.pop();
+        }
+        return true;
+    }
+
+    /*
+      Dequeues top element from queue. Returns -1 if the queue is empty, 
+      otherwise returns the popped element.
+    */
+    int dequeue()
+    {
+        int ans=-1;
+        if(!output.empty()) 
+        {
+            ans=output.top();
+            output.pop();
+        }
+        
+        return ans;
+    }
+};

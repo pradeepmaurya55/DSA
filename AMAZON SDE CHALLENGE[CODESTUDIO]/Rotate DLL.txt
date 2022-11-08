@@ -1,0 +1,48 @@
+#include <bits/stdc++.h> 
+/****************************************************
+
+    Following is the class structure of the DLLNode class:
+
+    class DLLNode {
+    public:
+	int data;
+	Node *next;
+
+	DLLNode(int data) {
+		this->data = data;
+		this->next = NULL;
+		this->prev = NULL;
+	}
+}
+
+*****************************************************/
+
+DLLNode* rotateDLL(DLLNode* head, int k) 
+{
+    if(head==NULL || head->next==NULL) return head;
+    if(k==0) return head;
+    
+    DLLNode* last;
+    DLLNode* curr=head;
+    
+    for(int i=1;i<k;i++)
+    {
+        curr=curr->next;
+    } 
+    
+    last = curr;
+    while(last->next)
+    {
+        last=last->next;
+    }
+    
+    last->next=head;
+    head->prev=last;
+    
+    head=curr->next;
+    curr->next=NULL;
+    head->prev=NULL;
+    
+    
+    return head;
+}
