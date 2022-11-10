@@ -1,0 +1,53 @@
+#include <bits/stdc++.h> 
+int kadane(vector<int> uptill)
+{
+    int maxa=INT_MIN;
+    int sum=0;
+    
+    for(int i=0;i<uptill.size();i++)
+    {
+        sum+=uptill[i];
+        if(sum>maxa) maxa=sum;
+        if(sum<0) sum=0;
+        
+    }
+    return maxa;
+}
+
+int maxSumSubmatrix(vector<vector<int>>& mat, int n, int m)
+{
+	// Kadane's Algorithm 2D
+    vector<vector<int>> uptill(n,vector<int>(m,0));
+    
+    //calculate sum upto current colunn for each row 
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<m;j++)
+        {
+            //add sumup to last column in the uptill array 
+            if(j==0) uptill[i][j]=mat[i][j];
+            else uptill[i][j]=mat[i][j]+uptill[i][j-1];
+        }
+    }
+    int maxa=INT_MIN;
+    //iterte for each column combination from i to j 
+    for(int i=0;i<m;i++)
+    {
+        for(int j=i;j<m;j++)
+        {
+            vector<int> v;
+            //calculate for each row
+            for(int k=0;k<n;k++)
+            {
+                //store the sum for current kth row
+                int curr=0;
+                if(i==0) curr=uptill[k][j];
+                else curr=uptill[k][j]-uptill[k][i-1];
+                
+                v.push_back(curr);
+            }
+            maxa=max(maxa,kadane(v));
+        }
+    }
+    return maxa;
+}

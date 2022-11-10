@@ -1,0 +1,51 @@
+#include <bits/stdc++.h> 
+/* 
+	Examcentre class
+
+	template <typename T = int>
+	class Examcentre {
+		public:
+			T data;
+			Examcentre<T> *left;
+			Examcentre<T> *right;
+
+			Examcentre(T data)
+			{
+				this->data = data;
+				left = NULL;
+				right = NULL;
+			}
+	}
+*/
+
+map<Examcentre<int>*,  map<bool, int>> dp; 
+int solve(Examcentre<int> *root,bool taken)
+{
+    if(root==NULL) return 0;
+    if(dp.find(root)!=dp.end() && dp[root].find(taken)!=dp[root].end()) return dp[root][taken];
+    int rightTaken,leftTaken;
+    int rightNot,leftNot;
+    if(taken)
+    {
+        rightNot=solve(root->right,false);
+        leftNot=solve(root->left,false);
+        int ans=1+rightNot+leftNot;
+        return dp[root][taken]=ans;
+    }
+    else
+    {
+        rightNot=solve(root->right,false);
+        leftNot=solve(root->left,false);
+        
+        rightTaken=solve(root->right,true);
+        leftTaken=solve(root->left,true);
+        
+        int ans = max(rightNot,rightTaken)+max(leftNot,leftTaken);
+        return dp[root][taken]=ans;
+    }
+    
+}
+int examInstructor(Examcentre<int> *root) 
+{
+	return max(solve(root,true),solve(root,false));
+}

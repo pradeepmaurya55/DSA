@@ -1,0 +1,24 @@
+#include <bits/stdc++.h> 
+int maxSumPairWithDifferenceLessThanK(vector<int> & arr, int n, int k)
+{
+	// Greedy Approach
+    priority_queue<int> pq;
+    int sum=0;
+    
+    for(int i=0;i<n;i++)
+    {
+        pq.push(arr[i]);
+    }
+    
+    while(pq.size()>1)
+    {
+        int temp=pq.top();
+        pq.pop();
+        if(temp-pq.top()<k)
+        {
+            sum+=(temp+pq.top());
+            pq.pop();
+        }
+    }
+    return sum;
+}
