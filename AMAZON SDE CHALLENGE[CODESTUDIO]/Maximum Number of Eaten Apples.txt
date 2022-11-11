@@ -1,0 +1,26 @@
+#include <bits/stdc++.h> 
+typedef pair<int,int> pii;
+//to store  expiriy day , number of apples for that expiriy day 
+int maxEatenApples(int n, vector<int> &apples, vector<int> &days) 
+{
+	// Greedy Approach
+    priority_queue<pii,vector<pii>,greater<pii>> pq;
+    int i=0;//current day starting from 0
+    int total=0;
+    
+    while(i<n || !pq.empty())
+    {
+        if(i<n && apples[i]!=0) pq.push({i+days[i]-1,apples[i]});
+        while(!pq.empty() && pq.top().first<i) pq.pop();
+        
+        if(!pq.empty())
+        {
+            pii curr=pq.top();
+            pq.pop();
+            if(curr.second>1) pq.push({curr.first,curr.second-1});
+            total++;
+        }
+        i++;
+    }
+    return total;
+}
