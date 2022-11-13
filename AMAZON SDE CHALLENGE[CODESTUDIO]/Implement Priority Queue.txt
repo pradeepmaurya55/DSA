@@ -1,0 +1,68 @@
+#include <bits/stdc++.h> 
+
+// Use this class to implement  the following operation
+/* 
+    class priQueue{
+        int *arr;
+        int size;
+
+        priQueue(){
+            arr=new int[1000];
+            size=-1;
+        }
+
+        void push(int x);
+        void pop();
+        int getMaxElement();
+        bool isempty();
+    };
+*/
+
+    // Function to perform push operation
+    void priQueue :: push(int data)
+    {
+        if(size+1>=1000) return; 
+        size++;
+        arr[size]=data;
+        int i=size;
+        int parent=(i-1)/2;
+        while(i>=0 && parent>=0 && arr[parent]<arr[i] )
+        {
+            swap(arr[parent],arr[i]);
+            i=parent;
+            parent=(i-1)/2;
+        }
+    } 
+
+    // Function to pop operation
+    void priQueue :: pop()
+    {
+        if(size<0) return;
+        swap(arr[0],arr[size]);
+        size--;
+        int i=0;
+        while(i<=size)
+        {
+            int lc=(i*2)+1;
+            int rc=(i*2)+2;
+            int max=i;
+            if(lc<size && arr[lc]>arr[max]) max=lc;
+            if(rc<size && arr[rc]>arr[max]) max=rc;
+            if(i==max) break;
+            swap(arr[max],arr[i]);
+            i=max;
+        }
+    }
+
+    int priQueue :: getMaxElement()
+    {
+        if(size<0) return -1;
+        return arr[0];
+    }
+
+
+    bool priQueue :: isempty()
+    {
+        if(size==-1) return true;
+        return false;
+    }

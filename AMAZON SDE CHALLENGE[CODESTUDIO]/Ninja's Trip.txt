@@ -1,0 +1,21 @@
+#include<bits/stdc++.h>
+int minimumCoins(int n, vector<int> days, vector<int> cost)
+{
+    int mincost=0;
+    queue<pair<int,int>> week;
+    queue<pair<int,int>> month;
+    //Greedily try all possibilities for each day;
+    for(int i=0;i<n;i++)
+    {
+        while(!week.empty() && week.front().first+7<=days[i]) 
+            week.pop();
+        while(!month.empty() && month.front().first+30<=days[i])
+            month.pop();
+        
+        week.push({days[i],cost[1]+mincost});
+        month.push({days[i],cost[2]+mincost});
+        int day=cost[0]+mincost;
+        mincost=min({day, week.front().second, month.front().second});
+    }
+    return mincost;
+}

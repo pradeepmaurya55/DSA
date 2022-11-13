@@ -1,0 +1,32 @@
+#include <bits/stdc++.h> 
+/*
+Following is the structure of Tree Node
+
+class TreeNode 
+{
+   public:
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+
+    TreeNode(int val) 
+    {
+        this->val = val;
+        left = NULL;
+        right = NULL;
+    }
+};
+*/
+void solve(TreeNode* node,vector<int> &ans)
+{
+    if(node==NULL) return;
+    solve(node->left,ans);
+    solve(node->right,ans);
+    ans.push_back(node->val);
+}
+vector<int> postorderTraversal(TreeNode* root)
+{
+    vector<int> ans;
+    solve(root,ans);
+    return ans;
+}

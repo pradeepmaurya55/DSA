@@ -1,0 +1,41 @@
+int minSwap (int N, int M, int K, string &S, vector<char> &arr)
+{
+    //store which char are available for swapping
+    bool swapChar[26]={0};
+    for(int i=0;i<M;i++) swapChar[arr[i]-'a']=true; 
+    
+    //for each period of k find frequency of each charachter
+    char freq[K][26];
+    
+    //intialise array to zero
+    for(int i=0;i<K;i++)
+        for(int j=0;j<26;j++)
+            freq[i][j]=0;
+    
+    //fill frequency array
+    for(int i=0;i<N;i++)
+    {
+        freq[i%K][S[i]-'a']+=1;
+    }
+            
+    int count=0;
+    int total=N/K;
+    
+    //for k periodic check for every position 1-k 
+    for(int i=0;i<K;i++)
+    {
+        int maxFreq=0;
+        //check for most frequent character and
+        //if available in swapable char array
+        for(int j=0;j<26;j++)
+        {
+            if(freq[i][j]>maxFreq && swapChar[j]==true)
+                maxFreq=freq[i][j];
+        }
+        int extra=0;//leftover char after k periods
+        if(i%K < N%K) extra=1;
+        count+=total-maxFreq+extra;
+    }
+    return count;
+
+}

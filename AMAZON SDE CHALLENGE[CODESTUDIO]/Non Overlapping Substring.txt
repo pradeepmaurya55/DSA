@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+//checks all the characters after current character are
+//occuring first time between the current character's
+//left most occurence to right most occurence
+//returns -1 if a charcter has already appeared
+int  helper(string &str,int i,vector<int> &l,vector<int> &r)
+{
+    int right=r[str[i]-'a'];
+    for(int j=i;j<=right;j++)
+    {
+        if(l[str[j]-'a']< i) return -1;
+        right=max(right,r[str[j]-'a']);
+    }
+    return right;
+}
+
+vector<string> nonOverlappingSubstrings(string &str) 
+{
+    //Greedy approach
+    //store left and right occurence of each character
+    vector<int> left(26,INT_MAX);
+    vector<int> right(26,INT_MIN);
+    vector<string> ans;
+    
+    //fill left and right array
+    for(int i=0;i<str.size();i++)
+    {
+        left[str[i]-'a']=min(left[str[i]-'a'],i);
+        right[str[i]-'a']=i;
+    }
+    
+    
+    int currRight= -1;
+        
+    for(int i=0;i<str.size();i++)
+    {
+        //if this is then first of current character
+        if(i==left[str[i]-'a'])
+        {
+            int newRight=helper(str,i,left,right);
+            if(newRight != -1)
+            {
+                if(i > currRight) ans.push_back("");
+                currRight=newRight;
+                ans.back()=str.substr(i,currRight-i+1);
+            }
+        }
+    }
+    return ans;
+}

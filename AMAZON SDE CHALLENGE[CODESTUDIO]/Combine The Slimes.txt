@@ -1,0 +1,56 @@
+#include<bits/stdc++.h>
+int slimeSize(vector<int> &s,int i,int j)
+{
+    int size=0;
+    while(i<=j)
+    {
+        size+=s[i];
+        i++;
+    }
+    return size%100;
+}
+
+int solve(vector<int> s,int start,int end,vector<vector<int>> &dp)
+{
+    if(start>=end) return 0;
+    if(dp[start][end]!=-1) return dp[start][end];
+    int ans=10e7;
+    for(int  i=start;i<end;i++)
+    {
+        int left=solve(s,start,i,dp);
+        int right=solve(s,i+1,end,dp);
+        int currSize=slimeSize(s,start,i)*slimeSize(s,i+1,end);
+        ans=min(ans,left+right+currSize);
+    }
+    return dp[start][end]=ans;
+}
+
+int minCost(int n, vector<int> &slimes) 
+{
+    // Kind of matrix chain multiplication
+    vector<vector<int>> dp(n,vector<int>(n));
+
+    //memoized recursive 
+    //     return solve(slimes,0,n-1,dp);
+    
+    
+    //base case 
+    for(int i=0;i<n;i++) dp[i][i]=0;
+    
+    for(int start=n-1;start>=0;start--)
+    {
+        for(int end=start+1;end<n;end++)
+        {
+            int ans=10e7;
+            for(int k=start;k<end;k++)
+            {
+                int left=dp[start][k];
+                int right=dp[k+1][end];
+                int currSize = slimeSize(slimes,start,k) * slimeSize(slimes,k+1,end);
+                ans=min(ans , left+right+currSize);
+            }
+            dp[start][end]=ans;
+        }
+    }
+    return dp[0][n-1];
+}
