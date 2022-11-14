@@ -1,0 +1,41 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the TreeNode class structure:
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+//POSTORDER TRAVERSAL UPTO THE GIVEN NODE
+string solve(TreeNode<int> *root,vector<TreeNode<int>*> &ans,unordered_map<string,int> &mp)
+{
+    if(!root) return "";
+    string left=solve(root->left,ans,mp);
+    string right=solve(root->right,ans,mp);
+    
+    string curr=to_string(root->data)+"$"+left+"$"+right;
+    if(mp[curr]==1) ans.push_back(root);
+    mp[curr]++;
+    return curr;
+}
+
+vector<TreeNode<int>*> duplicate_subtree(TreeNode<int> *root)
+{
+    // post order traversal
+    vector<TreeNode<int>*> ans;
+    unordered_map<string,int> mp;
+    solve(root,ans,mp);
+    return ans;
+}

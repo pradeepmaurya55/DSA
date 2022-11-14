@@ -1,0 +1,28 @@
+#include <bits/stdc++.h> 
+long long int bobsHomework(int n)
+{
+    string s=to_string(n);
+    
+    int i=s.size()-2;
+    while(i>0)
+    {
+        if(s[i]<s[i+1]) break;
+        i--;
+    }
+    
+    int j=s.size()-1;
+    while(j>0)
+    {
+        if(s[j]>s[i]) break;
+        j--;
+    }
+    
+    if(i==0 && j==0) return -1;
+    
+    swap(s[j],s[i]);
+    reverse(s.begin()+i+1,s.end());
+    
+    auto ans=stoll(s);
+    if(ans<=n) return -1;
+    return ans;
+}

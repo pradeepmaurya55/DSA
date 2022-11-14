@@ -1,0 +1,38 @@
+/****************************************************************
+
+Following is the class structure of the Node class:
+
+class LinkedListNode 
+{
+    public:
+    int data;
+    LinkedListNode* next;
+
+    LinkedListNode(int data) 
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+};
+
+*****************************************************************/
+
+LinkedListNode* mergeInBetween(int x, int y, LinkedListNode *head1, LinkedListNode *head2) 
+{
+    LinkedListNode* curr=head1;
+    LinkedListNode* prev;
+    
+    for(int i=1;i<x;i++) curr=curr->next;
+    
+    prev=curr->next;
+    curr->next=head2;
+    
+    while(head2->next!=NULL) head2=head2->next;
+    
+    for(int i=x;i<=y;i++) prev=prev->next;
+    
+    head2->next=prev;
+    return head1;
+}
+
+

@@ -1,0 +1,42 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the TreeNode class structure:
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T val;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T val) {
+            this->val = val;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+
+vector<int> avg_level(TreeNode<int> *root)
+{
+    vector<int> ans;
+    queue<TreeNode<int>*> q;
+    q.push(root);
+    while(!q.empty())
+    {
+        int sum=0;
+        int size=q.size();
+        for(int i=0;i<size;i++)
+        {
+            TreeNode<int>* curr=q.front();
+            sum+=curr->val;
+            if(curr->left) q.push(curr->left);
+            if(curr->right) q.push(curr->right);
+            q.pop();
+        }
+        ans.push_back(sum/size);
+    }
+    return ans;
+}

@@ -1,0 +1,77 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class specialQueue{
+private: 
+    list<int> l;
+public:
+    void init(){
+        // Write your code here.
+    }
+
+    void pushFront(int val)
+    {
+        l.push_front(val);
+    }
+
+    void pushBack(int val)
+    {
+        l.push_back(val);
+    }
+    
+    void pushMiddle(int val)
+    {
+        if(l.size()==0)
+        {
+            l.push_front(val);
+            return;
+        }
+        auto itr=l.begin();
+        advance(itr,l.size()/2);
+        l.insert(itr,val);
+    }
+
+    int popFront()
+    {
+        int val=-1;
+        if(l.size())
+        {
+            val=l.front();
+            l.pop_front();
+        }
+        return val;
+    }
+
+    int popBack()
+    {
+        int val=-1;
+        if(l.size())
+        {
+            val=l.back();
+            l.pop_back();
+        }
+        
+            return val;
+    }
+
+    int popMiddle()
+    {
+        if(l.size()==0) return -1;
+        int val;
+        if(l.size()%2==0)
+        {
+            auto itr=l.begin();
+            advance(itr,l.size()/2-1);
+            val=(*itr);
+            l.erase(itr);
+        }
+        else
+        {
+            auto itr=l.begin();
+            advance(itr,l.size()/2);
+            val=(*itr);
+            l.erase(itr);
+        }
+        return val;
+    }
+};

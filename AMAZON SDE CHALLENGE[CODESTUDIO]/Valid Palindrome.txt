@@ -1,0 +1,32 @@
+#include <bits/stdc++.h> 
+// check if particular part of string is palindrome
+bool isPalindrome(string s,int left, int right)
+{
+    while(left<right)
+    {
+        if(s[left]!=s[right]) return false;
+        left++;
+        right--;
+    }
+    return true;
+}
+bool validPalindrome(int n, string &s)
+{
+    //naive approach using two pointer
+    int left=0;
+    int right=n-1;
+    
+    while(left<right)
+    {
+        //if current char don't match try deleting one at a time
+        if(s[left]!=s[right])
+        {
+            bool leftDeleted=isPalindrome(s,left+1,right);
+            bool rightDeleted=isPalindrome(s,left,right-1);
+            return leftDeleted||rightDeleted;
+        }
+        left++;
+        right--;
+    }
+    return true;
+}
