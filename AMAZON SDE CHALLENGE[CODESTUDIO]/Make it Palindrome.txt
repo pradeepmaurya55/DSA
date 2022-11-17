@@ -1,0 +1,34 @@
+#include <bits/stdc++.h> 
+int palindrome(vector<int> A)
+{
+    //greedily naive solution  just keep check of constraints
+	int i=0;
+    int j=A.size()-1;
+    int ans=0;
+    long left=A[i];//needslong to store large values
+    long right=A[j];
+    
+    while(i<j)
+    {
+        if(left==right)
+        {
+            i++;
+            j--;
+            left=A[i];
+            right=A[j];
+        }
+        else if(left<right)
+        {
+            ans++;
+            left+=A[i+1];
+            i++;
+        }
+        else if(left>right)
+        {
+            ans++;
+            right+=A[j-1];
+            j--;
+        }
+    }
+    return ans;
+}

@@ -1,0 +1,21 @@
+#include <bits/stdc++.h> 
+int findSub(int N, int K, vector<int>& A)
+{
+    // to store remiander,last index found
+    if(A.size()<=1) return 0;
+    unordered_map<int,int> mp;
+    int sum=0;
+    mp[0]=-1;
+    for(int i=0;i<N;i++)
+    {
+        sum+=A[i];
+        int remainder=(sum%K+K)%K;
+        if(mp.find(remainder)==mp.end()) mp[remainder]=i;
+        else
+        {
+            int len=i-mp[remainder];
+            if(len>1) return 1;
+        }
+    }
+    return 0;
+}

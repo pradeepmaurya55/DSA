@@ -1,0 +1,46 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the TreeNode class structure:
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+int levelLeaf(TreeNode<int> *root) 
+{
+   if(!root) return 1;
+    queue<TreeNode<int> *> q;
+    bool foundNull=false;
+    q.push(root);
+    while(!q.empty())
+    {
+        int size=q.size();
+        if(size>0 && foundNull) return 0;
+        for(int i=0;i<size;i++)
+        {
+            TreeNode<int> * curr=q.front();
+            q.pop();
+            
+            if(!curr->left && !curr->right)
+            {
+                foundNull=true;
+                continue;
+            }
+            if(curr->left) q.push(curr->left);
+            if(curr->right) q.push(curr->right);
+        }
+    }
+    return 1;
+}

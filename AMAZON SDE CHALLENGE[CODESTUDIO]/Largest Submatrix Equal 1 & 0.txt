@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+int subarrayEqual(vector<int> v)
+{
+    unordered_map<int,int> mp;
+    int maxlength=-1;
+    int sum=0;
+    for(int i=0;i<v.size();i++)
+    {
+        sum+=v[i];
+        
+        if(sum==0)
+        {
+            maxlength=i;
+            continue;
+        }
+        if(mp.find(sum)==mp.end()) mp[sum]=i;
+        else
+        {
+            if(maxlength<i-mp[sum])
+            {
+                maxlength=i-mp[sum]-1;  
+            }
+        }
+    }
+    return maxlength;
+}
+
+
+int largestSubMatrix(int n, int m, vector<vector<int>> arr) 
+{
+    //use largest subarray sum zero technique
+    //apply by including each row at a time
+    int maxArea=0;
+    for(int row=0;row<n;row++)
+    {
+        vector<int> vec(m,0);
+        for(int currRow=row;currRow<n;currRow++)
+        {
+            for(int col=0;col<m;col++) 
+            {
+                if(arr[currRow][col]==0) 
+                    vec[col]+=(-1);
+                else
+                    vec[col]+=1;
+            }
+            
+            int currArea=(currRow-row+1)*(subarrayEqual(vec)+1);
+            maxArea=max(currArea,maxArea);
+        }
+    }
+    return maxArea;
+}
+    

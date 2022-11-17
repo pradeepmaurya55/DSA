@@ -1,0 +1,26 @@
+#include <bits/stdc++.h> 
+string zigzagConversion(string s, int row) 
+{
+    if(row==1) return s;
+    string ans="";
+    
+    for(int currRow=0;currRow<row;currRow++)
+    {
+        int i=currRow;
+        bool up=true;
+        while(i<s.length())
+        {
+            ans+=s[i];
+            
+            if(currRow ==0 || currRow==row-1)
+                i+=(2*row-2);
+            else
+            {
+                if(up) i+=2*(row-currRow)-2;
+                else i+=currRow*2;
+                up=!up;
+            }
+        }
+    }
+    return ans;
+}

@@ -1,0 +1,60 @@
+#include <bits/stdc++.h> 
+/****************************************************************
+
+    Following is the class structure of the Node class:
+
+class LinkedListNode 
+{
+    public:
+    int data;
+    LinkedListNode* next;
+
+    LinkedListNode(int data) 
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+};
+
+*****************************************************************/
+
+LinkedListNode* swapNodes(int k, LinkedListNode *head) 
+{
+    if(!head) return head;
+    if(k==0) return head;
+    
+    LinkedListNode * start=head;
+    LinkedListNode * startPrev=NULL;
+
+    for(int i=1;i<k;i++)
+    {
+        startPrev=start;
+        start=start->next;
+    }
+    
+    LinkedListNode * end=head;
+    LinkedListNode * endPrev=NULL;
+    LinkedListNode * temp=start;
+    
+    while(temp->next)
+    {
+        temp=temp->next;
+        endPrev=end;
+        end=end->next;
+    }
+    
+    if(startPrev!=NULL) startPrev->next=end;
+    else head=end;
+    
+    if(endPrev!=NULL) endPrev->next=start;
+    else head=start;
+    
+    temp=start->next;
+    start->next=end->next;
+    end->next=temp;
+    
+    return head;
+    
+}
+
+

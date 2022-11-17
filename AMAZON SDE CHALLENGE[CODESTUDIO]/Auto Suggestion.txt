@@ -1,0 +1,28 @@
+#include <bits/stdc++.h> 
+vector<vector<string>> autoSuggestion (int n, vector<string> S, int l, string P)
+{
+    //sort strings vector in increasing lexicographically
+    sort(S.begin(),S.end());
+    
+    vector<vector<string>> ans;
+    vector<string> temp;
+    auto start=S.begin();
+    
+    string curr="";
+    
+    for(int i=0;i<l;i++)
+    {
+        curr+=P[i];
+        temp.clear();
+        start=lower_bound(start,S.end(),curr);
+        for(int j=0;j<3 && start+j!=S.end();j++)
+        {
+            string s=*(start+j);
+            if(s.find(curr)) break;
+            temp.push_back(s);
+        }
+        ans.push_back(temp);
+    }
+    return ans;
+    
+}

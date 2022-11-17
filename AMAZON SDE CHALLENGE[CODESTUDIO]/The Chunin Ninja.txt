@@ -1,0 +1,33 @@
+#include <bits/stdc++.h> 
+vector <int> chuninNinja(int n , int m , vector < vector < int > > arr)
+{
+    //naive approach
+    //store either rowmin or colmax and then check equivalence
+    vector<int> ans;
+    vector<int> rowMin;
+    vector<int> colMax;
+    
+    for(int i=0;i<n;i++)
+    {
+        int rowMini=INT_MAX;
+        for(int j=0;j<m;j++) rowMini=min(rowMini,arr[i][j]);
+        
+        rowMin.push_back(rowMini);
+    }
+    
+    for(int j=0;j<m;j++)
+    {
+        int colMaxi=INT_MIN;
+        for(int i=0;i<n;i++) colMaxi=max(colMaxi,arr[i][j]);
+        
+        colMax.push_back(colMaxi);
+    }
+    
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<m;j++)
+            if(arr[i][j]==rowMin[i] && arr[i][j]==colMax[j]) 
+                ans.push_back(arr[i][j]);
+    }
+    return ans;
+}

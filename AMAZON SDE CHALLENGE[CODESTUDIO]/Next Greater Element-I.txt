@@ -1,0 +1,20 @@
+#include <bits/stdc++.h> 
+vector<int> nextGreaterElement(int n, vector<int> A, int m, vector<int> B) 
+{
+    stack<int> st;
+    unordered_map<int,int> mp;
+    
+    for(int i=m-1;i>=0;i--)
+    {
+        while(!st.empty() && st.top()<=B[i]) st.pop();
+        if(st.empty()) mp[B[i]]=-1;
+        else mp[B[i]]=st.top();
+        st.push(B[i]);
+    }
+    
+    for(int i=0;i<n;i++)
+    {
+        A[i]=mp[A[i]];
+    }
+    return A;
+}

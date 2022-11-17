@@ -1,0 +1,37 @@
+#include<bits/stdc++.h>
+string removeDuplicateSubstrings(int n, int k, string &s)
+{
+    if(k==1) return "";
+    stack<pair<char,int>>st;
+    
+    for(int i=0;i<n;i++)
+    {
+        if(st.empty())
+            st.push({s[i],1});
+        else
+        {
+            if(st.top().first==s[i])
+            {
+                auto curr = st.top();
+                st.pop();
+                curr.second++;
+                if(curr.second == k) continue;
+                else st.push(curr);
+            }
+            else
+                 st.push({s[i],1});
+        }
+    }
+    
+    string ans="";
+    while(!st.empty())
+    {
+        for(int i=0;i<st.top().second;i++)
+        ans+=st.top().first;
+        st.pop();
+    }
+    
+    reverse(ans.begin(),ans.end());
+    
+    return ans;
+}
